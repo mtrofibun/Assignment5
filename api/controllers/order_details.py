@@ -20,12 +20,12 @@ def read_all(db: Session):
 
 
 def read_one(db: Session, detail_id):
-    return db.query(models.OrderDetail).filter(models.Detail_id == detail_id).first()
+    return db.query(models.OrderDetail).filter(models.Detail.id == detail_id).first()
 
 
 def update(db: Session, detail_id, detail):
 
-    db_order_details = db.query(models.OrderDetail).filter(models.Detail_id == detail_id)
+    db_order_details = db.query(models.OrderDetail).filter(models.Detail.id == detail_id)
     update_data = detail.model_dump(exclude_unset=True)
     db_order_details.update(update_data, synchronize_session=False)
     db.commit()
@@ -33,7 +33,7 @@ def update(db: Session, detail_id, detail):
 
 
 def delete(db: Session, detail_id):
-    db_order_details = db.query(models.OrderDetail).filter(models.Detail_id == detail_id)
+    db_order_details = db.query(models.OrderDetail).filter(models.Detail.id == detail_id)
     db_order_details.delete(synchronize_session=False)
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
